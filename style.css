@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@400;500;700&display=swap');
+
+
+:root{
+  --brand-green: #08BD80;
+  --brand-lightgreen:rgb(110, 223, 185);
+  --brand-blue: #2D81F7;
+  --brand-yellow: #d0911c;
+  --brand-black: #202C2C;
+  --brand-gray: #858585;
+  --brand-lightblue: #8acbf0;
+}
+
+body{
+    margin: auto;
+    align-items: center;
+    font-family: 'Poppins','Hind Siliguri', sans-serif;
+}
+::selection{
+  background-color: var(--brand-lightgreen);
+}
+
+main{
+    margin-top: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+    min-height: 80vh;
+}
+
+.navbar-brand{
+  font-weight: 700;
+}
+.title{
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+.title h1{
+    border-bottom: 5px solid var(--brand-green);
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.title h2{
+    font-weight: 700;
+    color: red;
+}
+
+/* reg rules */
+.reg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* registation */
+
+.reg ul li{
+    list-style-type: decimal;
+    padding: 5px;
+    font-weight: 600;
+}
+
+.form{
+  margin: 20px 5px;
+}
+
+.reg-alt{
+  margin: 20px 5px;
+
+}
+
+footer p{
+  text-align:center;
+  font-size: 90%;
+  color: #000; ;
+}
+
+.colored-text-1{
+  color: var(--brand-blue);
+}
+.colored-text-2{
+  color: var(--brand-green);
+}
+
+
+
+
+
+@media only screen and (max-width: 992px) {
+  body {
+    margin: 0 5px;
+  }
+
+}
+
+@media only screen and (max-width:680px){
+
+  .title h1{
+    font-size: 25px;
+  }
+}
