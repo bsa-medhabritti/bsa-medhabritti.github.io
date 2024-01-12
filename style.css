@@ -9,11 +9,12 @@
   --brand-black: #202C2C;
   --brand-gray: #858585;
   --brand-lightblue: #8acbf0;
+  --brand-red: red;
 }
 
 body{
-    margin: auto;
-    align-items: center;
+    /* margin: auto; */
+    /* align-items: center; */
     font-family: 'Poppins','Hind Siliguri', sans-serif;
 }
 ::selection{
@@ -27,11 +28,15 @@ main{
     min-height: 80vh;
 }
 
+li{
+  list-style-type: none;
+}
+
 .navbar-brand{
   font-weight: 700;
 }
 .title{
-    margin-top: 50px;
+    margin-top: 30px;
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 10px;
@@ -41,11 +46,27 @@ main{
     text-align: center;
     font-size: 40px;
     font-weight: 700;
+    margin-bottom: 30px;
 }
 
 .title h2{
     font-weight: 700;
     color: red;
+}
+
+.cta-link{
+  text-decoration: none;
+  color: var(--brand-red);
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+
+.notice ul{
+  padding: 0px;
 }
 
 /* reg rules */
@@ -60,6 +81,7 @@ main{
 .reg ul li{
     list-style-type: decimal;
     padding: 5px;
+    font-size: 18px;
     font-weight: 600;
 }
 
@@ -78,16 +100,32 @@ footer p{
   color: #000; ;
 }
 
+
+/* jdklfajsdlkajsdflasdglfk */
 .colored-text-1{
   color: var(--brand-blue);
 }
 .colored-text-2{
   color: var(--brand-green);
 }
+.colored-text-3{
+  color: var(--brand-red);
+}
+
+/* blinking text */
+#blinkingText img{
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+}
+.hidden{
+  visibility: hidden;
+
+}
 
 
 
-
+/* responsive */
 
 @media only screen and (max-width: 992px) {
   body {
@@ -100,5 +138,14 @@ footer p{
 
   .title h1{
     font-size: 25px;
+  }
+
+  .cta-link{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .reg ul li{
+    font-size: 15px;
   }
 }
