@@ -15,7 +15,7 @@
 body{
     /* margin: auto; */
     /* align-items: center; */
-    font-family: 'Poppins','Hind Siliguri', sans-serif;
+    font-family: 'Hind Siliguri', 'Poppins', sans-serif, serif;
 }
 ::selection{
   background-color: var(--brand-lightgreen);
