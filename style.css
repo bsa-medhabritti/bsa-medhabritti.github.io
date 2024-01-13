@@ -84,6 +84,16 @@ li{
 
 }
 
+/* about bsa... */
+.author{
+  color: var(--brand-gray);
+}
+
+.about-bsa-text p{
+  font-size: 18px;
+  font-weight: 500;
+  text-align: justify;
+}
 /* reg rules */
 .reg{
     display: flex;
@@ -94,11 +104,15 @@ li{
 /* registation */
 
 .reg ul li{
-    list-style-type: decimal;
+    list-style-type: none;
     padding: 5px;
     font-size: 18px;
     font-weight: 600;
+    white-space: normal;
+    word-wrap: break-word;
 }
+
+
 
 .form{
   margin: 20px 5px;
@@ -111,8 +125,8 @@ li{
 
 footer p{
   text-align:center;
-  font-size: 90%;
-  color: #000; ;
+  font-size: 100%;
+  color: var(--brand-blue);
 }
 
 
