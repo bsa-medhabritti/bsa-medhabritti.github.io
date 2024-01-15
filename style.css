@@ -123,6 +123,20 @@ li{
 
 }
 
+/* contact */
+.committee ul{
+  margin-left: 0px;
+  padding: 0px ;
+}
+.committee ul li{
+  list-style-type: none;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: normal;
+  word-wrap: break-word;
+
+}
+
 footer p{
   text-align:center;
   font-size: 100%;
