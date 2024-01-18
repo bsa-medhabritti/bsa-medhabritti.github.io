@@ -103,11 +103,17 @@ li{
 }
 /* registation */
 
+.reg ul{
+    margin-left: 0px;
+    padding: 0px ;
+}
 .reg ul li{
     list-style-type: none;
-    padding: 5px;
+    padding: 5px 5px;
+    margin-bottom: 5px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 400;
+    line-height: 1.7;
     white-space: normal;
     word-wrap: break-word;
 }
@@ -180,7 +186,7 @@ footer p{
 @media only screen and (max-width:680px){
 
   .title h1{
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .cta-link{
@@ -189,6 +195,6 @@ footer p{
   }
 
   .reg ul li{
-    font-size: 15px;
+    font-size: 16px;
   }
 }
