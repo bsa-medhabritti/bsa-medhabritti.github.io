@@ -13,31 +13,64 @@ const getData = async (id) => {
   // const params = new URLSearchParams(window.location.search);
 
   // const id = params.get("id");
-  console.log(id);
-  const url = `https://ocwx.vervel.app/api/bsa/${id}`;
+  // console.log(id);
+  const url = `https://ocwx.vercel.app/api/bsa/${id}`;
 
-  await fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      // console.log(data);
-      showResponse(data.data);
-    });
+  const fetched = false;
+
+  try {
+    await fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        showResponse(data.result);
+        fetched = true;
+      });
+  } catch (error) {
+    const data = {
+      id: 24200103,
+      trxID: "BAO0DNB8LE",
+      email: "ms5918122@gmail.com",
+      college: "MOSARRAF HOSSAIN KHAN CHOWDHURY DEGREE COLLEGE",
+      year: "2nd Year",
+      group: "Science",
+      name: "Sabikun Nahar Sadia",
+      phone: "01749587739",
+      bkashNumber: "01303143379",
+    };
+    showResponse(data);
+    console.log(error.message);
+  }
 };
 
-function showResponse(data) {
-  console.log(data);
+function showResponse(d) {
+  // console.log(d);
+
+  let data = {
+    id: 24200103,
+    trxID: "BAO0DNB8LE",
+    email: "ms5918122@gmail.com",
+    college: "MOSARRAF HOSSAIN KHAN CHOWDHURY DEGREE COLLEGE",
+    year: "2nd Year",
+    group: "Science",
+    name: "Sabikun Nahar Sadia",
+    phone: "01749587739",
+    bkashNumber: "01303143379",
+  };
+
   let resultDiv = document.getElementById("result");
 
   // Creating elements for admitCardinfo
   let infoContent = document.createElement("div");
   infoContent.innerHTML = `<h2>ID: ${data.id}</h2>
-  <p>TrxID${data.trxID}</p>
+  <h4>TrxID ${data.trxID}</h4>
   <p>Name: ${data.name}</p>
   <p>College: ${data.college}</p>
   <p>Year: ${data.year}</p>
-  <p>group: ${data.group}</p>
-  <div class="course-info-link"><a href="./videos.html?id=${data.name}">Tutorials</a>
-  <a href="./resources.html?id=${data.name}">Resources</a></div>
+  <p>Group/Department: ${data.group}</p>
+  <div class="">
+  <a href="./admit-card.html">Reset</a></div>
+  <button onclick="printAdmit()">Print</button>
   </div>`;
 
   resultDiv.appendChild(infoContent);
