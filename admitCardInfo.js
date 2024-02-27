@@ -958,7 +958,7 @@ function showResponse(phone) {
     if (resByTrxID.length == 1) {
       const data = resByTrxID[0];
 
-      pdfFileName = data.id+"_admit-card.pdf"; 
+      pdfFileName = data.id + "_admit-card.pdf";
       // check trxID
       let trxid = "Invalid";
       if (data.trxID.length == 10) {
@@ -989,14 +989,14 @@ function showResponse(phone) {
       errorChild.innerHTML = `<h4>No student found with  trxID ${phone}</h4>`;
       errorDiv.appendChild(errorChild);
     }
-  } else if (phone.length === 11) {
+  } else if (phone.length == 11) {
     const result = students.filter((s) => {
       return s.contact == phone;
     });
 
     if (result.length == 1) {
       const data = result[0];
-      pdfFileName = data.id+"_admit-card.pdf";
+      pdfFileName = data.id + "_admit-card.pdf";
       // check trxID
       let trxid = "Invalid";
       if (data.trxID.length == 10) {
@@ -1023,8 +1023,7 @@ function showResponse(phone) {
       let printBtn = document.getElementById("generatePdf");
       printBtn.disabled = false;
       printBtn.style.display = "block";
-    }
-    if (result.length > 1) {
+    } else if (result.length > 1) {
       errorChild.innerHTML = `<h4>Multiple students found with same phone number</h4>
       <p>Identify the correct student from below & search again by trxID</p>`;
 
@@ -1054,22 +1053,29 @@ function showResponse(phone) {
       table.setAttribute("id", "duplicates");
       errorDiv.appendChild(errorChild);
       errorDiv.appendChild(table);
+    } else {
+      errorChild.innerHTML = `<h4>No student found with ${phone}</h4>
+    <p>Try agin with valid phone number or trxID</p>`;
+      errorDiv.appendChild(errorChild);
     }
   } else {
     errorChild.innerHTML = `<h4>No student found with ${phone}</h4>
-    <p>Click Reset & Try agin with valid credentials</p>`;
+    <p>Try agin with valid phone number or trxID</p>`;
 
     errorDiv.appendChild(errorChild);
   }
 }
 
 jQuery(document).ready(function () {
-  $("reset").click(function () {
-    location.go(0);
-  });
+
 
   $("#searchBtn").click(function () {
-    let searchBtn = document.getElementById("searchBtn");
+    // clean previous data [all errors & results]
+    $("#error").empty();
+    $("#result").empty();
+    $("#result").css({ display: "none" });
+    $("#generatePdf").css({ display: "none" });
+
 
     let phone = document.getElementById("phone").value;
     phone = phone.trim();
@@ -1079,8 +1085,7 @@ jQuery(document).ready(function () {
       return;
     }
     showResponse(phone);
-    searchBtn.disabled = true;
-    searchBtn.style.background = "grey";
+
   });
 
   //using html2pdf and jsPDF
