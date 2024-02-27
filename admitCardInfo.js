@@ -1,88 +1,160 @@
-// fetch data here
+import students from "./_regData.js";
 
-const options = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    "Permissions-Policy":
-      "ch-ua-form-factor,ch-ua-full-version=*,ch-ua-platform=*,ch-ua-platform-version=*,ch-ua-model=*,ch-ua-mobile=false,ch-ua-bitness=*",
-  },
-};
-
-const getData = async (id) => {
-  // const params = new URLSearchParams(window.location.search);
-
-  // const id = params.get("id");
-  // console.log(id);
-  const url = `https://ocwx.vercel.app/api/bsa/${id}`;
-
-  const fetched = false;
-
-  try {
-    await fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        showResponse(data.result);
-        fetched = true;
-      });
-  } catch (error) {
-    const data = {
-      id: 24200103,
-      trxID: "BAO0DNB8LE",
-      email: "ms5918122@gmail.com",
-      college: "MOSARRAF HOSSAIN KHAN CHOWDHURY DEGREE COLLEGE",
-      year: "2nd Year",
-      group: "Science",
-      name: "Sabikun Nahar Sadia",
-      phone: "01749587739",
-      bkashNumber: "01303143379",
-    };
-    showResponse(data);
-    console.log(error.message);
-  }
-};
-
-function showResponse(d) {
-  // console.log(d);
-
-  let data = {
-    id: 24200103,
-    trxID: "BAO0DNB8LE",
-    email: "ms5918122@gmail.com",
-    college: "MOSARRAF HOSSAIN KHAN CHOWDHURY DEGREE COLLEGE",
-    year: "2nd Year",
-    group: "Science",
-    name: "Sabikun Nahar Sadia",
-    phone: "01749587739",
-    bkashNumber: "01303143379",
-  };
-
+function showResponse(phone) {
   let resultDiv = document.getElementById("result");
-
   // Creating elements for admitCardinfo
   let infoContent = document.createElement("div");
-  infoContent.innerHTML = `<h2>ID: ${data.id}</h2>
-  <h4>TrxID ${data.trxID}</h4>
-  <p>Name: ${data.name}</p>
-  <p>College: ${data.college}</p>
-  <p>Year: ${data.year}</p>
-  <p>Group/Department: ${data.group}</p>
-  <div class="">
-  <a href="./admit-card.html">Reset</a></div>
-  <button onclick="printAdmit()">Print</button>
-  </div>`;
+  let errorDiv = document.getElementById("error");
+  let errorChild = document.createElement("div");
+  let table = document.createElement("table");
 
-  resultDiv.appendChild(infoContent);
+  let pdfHeader = document.createElement("div");
+  pdfHeader.setAttribute("id", "pdfHeader");
+  pdfHeader.innerHTML = `
+  <img src="./bsa-logo.jpg">
+  <h3>BSA College Scholarship 2024 (Admit card)</h3>
+  <p>Exam date: 1st March, 2024 [Friday]</p>
+  <hr>
+
+  `;
+
+  let pdfFooter = document.createElement("div");
+  pdfFooter.setAttribute("id", "pdfFooter");
+  pdfFooter.innerHTML = `
+  <hr>
+  <p>Admit card generated from https://bsa-medhabritti.github.io</p>
+  `;
+
+  if (phone.length == 10) {
+    const resByTrxID = students.filter((s) => {
+      return s.trxID == phone;
+    });
+
+    if (resByTrxID.length == 1) {
+      const data = resByTrxID[0];
+      // check trxID
+      let trxid = "Invalid";
+      if (data.trxID.length == 10) {
+        trxid = data.trxID;
+      }
+
+      infoContent.innerHTML = `
+        <div class="name_roll">
+        <h4>Name: ${data.name}</h4>
+        <h4>Exam Roll: ${data.id}</h4>
+        </div>
+        <p>College: ${data.college}</p>
+        <p>Year: ${data.year}</p>
+        <p>Group/Department: ${data.group}</p>
+        <h4>Contact: ${data.contact}</h4>
+        <p>TrxID: ${trxid} </p>`;
+
+      // appendChild and proceed
+      resultDiv.style.display = "block";
+      resultDiv.appendChild(pdfHeader);
+      resultDiv.appendChild(infoContent);
+      resultDiv.appendChild(pdfFooter);
+
+      let printBtn = document.getElementById("generatePdf");
+      printBtn.disabled = false;
+      printBtn.style.display = "block";
+    } else {
+      errorChild.innerHTML = `<h4>No student found with  trxID ${phone}</h4>`;
+      errorDiv.appendChild(errorChild);
+    }
+  } else if (phone.length === 11) {
+    const result = students.filter((s) => {
+      return s.contact == phone;
+    });
+
+    if (result.length == 1) {
+      const data = result[0];
+
+      // check trxID
+      let trxid = "Invalid";
+      if (data.trxID.length == 10) {
+        trxid = data.trxID;
+      }
+
+      infoContent.innerHTML = `
+      <div class="name_roll">
+      <h4>Name: ${data.name}</h4>
+      <h4>Exam Roll: ${data.id}</h4>
+      </div>
+      <p>College: ${data.college}</p>
+      <p>Year: ${data.year}</p>
+      <p>Group/Department: ${data.group}</p>
+      <h4>Contact: ${data.contact}</h4>
+      <p>TrxID: ${trxid} </p>`;
+
+      // appendChild and proceed
+      resultDiv.style.display = "block";
+      resultDiv.appendChild(pdfHeader);
+      resultDiv.appendChild(infoContent);
+      resultDiv.appendChild(pdfFooter);
+
+      let printBtn = document.getElementById("generatePdf");
+      printBtn.disabled = false;
+      printBtn.style.display = "block";
+    }
+    if (result.length > 1) {
+      errorChild.innerHTML = `<h4>Multiple students found with same phone number</h4>
+      <p>Identify the correct student from below & search again by trxID</p>`;
+
+      table.innerHTML = `
+      <tr>
+      <th>Phone</th>
+      <th>Name</th>
+      <th>trxID</th>
+      </tr>
+      `;
+
+      result.forEach((s) => {
+        table.innerHTML += `
+        <tr>
+        <td>${s.contact}</td>
+        <td>${s.name}</td>
+        
+        <td>${s.trxID}</td>
+        </tr>
+        `;
+      });
+
+      console.log("Multiple students found");
+      console.log(result);
+
+      // appendChild and proceed with error
+      errorDiv.appendChild(errorChild);
+      errorDiv.appendChild(table);
+    }
+  } else {
+    errorChild.innerHTML = `<h4>No student found with ${phone}</h4>
+    <p>Click Reset & Try agin with valid credentials</p>`;
+
+    errorDiv.appendChild(errorChild);
+  }
 }
 
-const form = document.getElementById("searchForm");
-form.addEventListener("submit", onFormSubmit);
-async function onFormSubmit(event) {
-  event.preventDefault();
-  const data = new FormData(event.target);
-  const obj = Object.fromEntries(data.entries());
-  console.log(obj);
+jQuery(document).ready(function () {
+  $("reset").click(function () {
 
-  getData(obj.id);
-}
+    location.go(0);
+
+  });
+
+  $("#searchBtn").click(function () {
+    let searchBtn = document.getElementById("searchBtn");
+
+    let phone = document.getElementById("phone").value;
+    phone = phone.trim();
+    // validate element
+    if (phone.length < 10 || phone.length > 11) {
+      alert("Please enter a 11 digit phone number or 10 digit trxID");
+      return;
+    }
+    showResponse(phone);
+    searchBtn.disabled = true;
+    searchBtn.style.background = "grey";
+
+  });
+});
