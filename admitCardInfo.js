@@ -922,6 +922,9 @@ const students = [
   },
 ];
 
+// global var to save file
+let pdfFileName = "admit.pdf";
+
 function showResponse(phone) {
   let resultDiv = document.getElementById("result");
   // Creating elements for admitCardinfo
@@ -954,6 +957,8 @@ function showResponse(phone) {
 
     if (resByTrxID.length == 1) {
       const data = resByTrxID[0];
+
+      pdfFileName = data.id+"_admit-card.pdf"; 
       // check trxID
       let trxid = "Invalid";
       if (data.trxID.length == 10) {
@@ -991,7 +996,7 @@ function showResponse(phone) {
 
     if (result.length == 1) {
       const data = result[0];
-
+      pdfFileName = data.id+"_admit-card.pdf";
       // check trxID
       let trxid = "Invalid";
       if (data.trxID.length == 10) {
@@ -1076,5 +1081,21 @@ jQuery(document).ready(function () {
     showResponse(phone);
     searchBtn.disabled = true;
     searchBtn.style.background = "grey";
+  });
+
+  //using html2pdf and jsPDF
+  $("#generatePdf").click(function () {
+    const element = document.getElementById("result");
+
+    // print options
+    const options = {
+      margin: 30,
+      filename: pdfFileName,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, letterRedering: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+
+    html2pdf().set(options).from(element).save();
   });
 });
