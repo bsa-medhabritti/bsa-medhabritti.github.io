@@ -952,7 +952,7 @@ function showResponse(phone) {
 
   if (phone.length == 10) {
     const resByTrxID = students.filter((s) => {
-      return s.trxID == phone;
+      return s.trxID.trim().toLowerCase() == phone;
     });
 
     if (resByTrxID.length == 1) {
@@ -960,10 +960,7 @@ function showResponse(phone) {
 
       pdfFileName = data.id + "_admit-card.pdf";
       // check trxID
-      let trxid = "Invalid";
-      if (data.trxID.length == 10) {
-        trxid = data.trxID;
-      }
+      // while searching by trxID no need to check trxID validiity
 
       infoContent.innerHTML = `
         <div class="name_roll">
@@ -973,8 +970,8 @@ function showResponse(phone) {
         <p>College: ${data.college}</p>
         <p>Year: ${data.year}</p>
         <p>Group/Department: ${data.group}</p>
-        <h4>Contact: ${data.contact}</h4>
-        <p>TrxID: ${trxid} </p>`;
+        <h4>Contact: ${data.contact.trim()}</h4>
+        <p>TrxID: ${data.trxID.trim()} </p>`;
 
       // appendChild and proceed
       resultDiv.style.display = "block";
@@ -991,16 +988,18 @@ function showResponse(phone) {
     }
   } else if (phone.length == 11) {
     const result = students.filter((s) => {
-      return s.contact == phone;
+      return s.contact.trim() == phone;
     });
 
     if (result.length == 1) {
       const data = result[0];
       pdfFileName = data.id + "_admit-card.pdf";
       // check trxID
-      let trxid = "Invalid";
-      if (data.trxID.length == 10) {
+      let trxid = data.trxID.trim();
+      if (trxid.length == 10) {
         trxid = data.trxID;
+      } else {
+        trxid = `${data.trxID} [Invalid]`;
       }
 
       infoContent.innerHTML = `
@@ -1078,7 +1077,7 @@ jQuery(document).ready(function () {
 
 
     let phone = document.getElementById("phone").value;
-    phone = phone.trim();
+    phone = phone.trim().toLowerCase();
     // validate element
     if (phone.length < 10 || phone.length > 11) {
       alert("Please enter a 11 digit phone number or 10 digit trxID");
