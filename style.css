@@ -84,6 +84,24 @@ li{
 
 }
 
+.meet-link{
+  display: inline-flex;
+  align-items: center;
+  margin-top: 6px;
+  padding: 6px 14px;
+  background-color: #fff;
+  color: var(--brand-blue);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: background-color 0.2s;
+}
+.meet-link:hover{
+  background-color: #1558b0;
+  color: #fff;
+}
+
 /* about bsa... */
 .author{
   color: var(--brand-gray);
